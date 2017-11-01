@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<extension id="publishbutton" xmlns="http://symphony-cms.com/schemas/extension/1.0">
+	<name>Publish Button</name>
+	<description>A button that toggles an entry's published state</description>
+	<repo type="github"></repo>
+	<types>
+		<type>Field</type>
+	</types>
+	<authors>
+		<author>
+			<name github="pixelninja">Phill Gray</name>
+			<website>https://thebold.nz</website>
+		</author>
+	</authors>
+	<releases>
+		<release version="1.0" date="2017-11-02" min="2.7.x" />
+	</releases>
+</extension>
