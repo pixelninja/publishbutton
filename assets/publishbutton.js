@@ -9,61 +9,84 @@
 	$(function() {
 		if ($('.page-edit .field-publishbutton').length <= 0) return false;
 
-		var publish_field = $('.field-publishbutton input'),
-			publish_field_name = publish_field.attr('name'),
-			publish_button = $('#context .actions').append('<li><a class="publishbutton-trigger create button disabled">' + Symphony.Language.get('Unpublished') + '</a></li>').find('.create');
+		var entry_id = Symphony.Context.get('env').entry_id,
+			field_wrapper = $('.field-publishbutton'),
+			field_id = /field-([\d]+)/g.exec(field_wrapper.attr('id'))[1],
+			input = field_wrapper.find('input'),
+			input_state = input.is(':checked'),
+			button = $('#context .actions').append('<li><a class="publishbutton-trigger create button disabled">' + Symphony.Language.get('Unpublished') + '</a></li>').find('.create');
 
-		if (publish_field.is(':checked')) {
-			publish_button
+		if (input_state) {
+			button
 				.removeClass('disabled')
 				.text(Symphony.Language.get('Published'));
 		}
 
-		publish_button.on('click', function () {
+		button.on('click', function (e) {
+			e.preventDefault();
+
 			var data = {
 				'xsrf': Symphony.Utilities ? Symphony.Utilities.getXSRF() : '',
-				'id': Symphony.Context.get('env').entry_id,
-				'action[save]': 1,
-				'action[ignore-timestamp]': 1
+				'entry_id' : entry_id,
+				'field_id' : field_id,
+				'state' : (input_state) ?  'no' : 'yes'
 			};
 
-			if (publish_button.hasClass('disabled')) {
-				data[publish_field_name]  = 'on';
-
-				publish_button
-					.removeClass('disabled')
-					.text(Symphony.Language.get('Published'));
-
-				publish_field.attr('checked', true);
-			}
-			else {
-				data[publish_field_name]  = 'off';
-
-				publish_button
-					.addClass('disabled')
-					.text(Symphony.Language.get('Unpublished'));
-
-				publish_field.attr('checked', false);
-			}
-
+			addLoader(button);
 			updateState(data);
+
+			return false;
 		});
 
 		function updateState(data) {
 			$.ajax({
+				url: Symphony.Context.get('root') + '/extensions/publishbutton/lib/update.php',
 				data: data,
 				dataType: 'html',
 				type: 'POST',
-				error: function(result){
-					console.log('error', result);
+				error: function(e){
+					// console.log('error', e);
+					showAlert('Error while trying to save. Please try again.');
 				},
-				// Add file
-				success: function(result) {
-					console.log('success');
+				complete: function(e){
+					removeLoader();
+				},
+				success: function(e) {
+					// console.log('success');
+
+					showAlert('Entry updated.', true);
+
+					if (button.hasClass('disabled')) {
+						button
+							.removeClass('disabled')
+							.text(Symphony.Language.get('Published'));
+
+						input.attr('checked', true);
+					}
+					else {
+						button
+							.addClass('disabled')
+							.text(Symphony.Language.get('Unpublished'));
+
+						input.attr('checked', false);
+					}
 				},
 			});
-
 		}
+
+		function addLoader(element) {
+			element.before('<div class="publishbutton-loader" />');
+		}
+
+		function removeLoader() {
+			$(".publishbutton-loader").remove();
+		}
+
+		function showAlert(msg, success) {
+			Symphony.Elements.header.find('div.notifier').trigger('attach.notify', [Symphony.Language.get(msg), success ? 'success' : 'error']
+			);
+		};
+
 	});
 
 })(jQuery);
