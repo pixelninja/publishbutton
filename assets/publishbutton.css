@@ -1,5 +1,6 @@
+.page-new .field-publishbutton,
 .page-edit .field-publishbutton {
-    /*display: none;*/
+    display: none;
 }
 
 .publishbutton-trigger.disabled {
