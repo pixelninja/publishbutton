@@ -61,14 +61,14 @@
 							.removeClass('disabled')
 							.text(Symphony.Language.get('Published'));
 
-						input.attr('checked', true);
+						input.prop('checked', true);
 					}
 					else {
 						button
 							.addClass('disabled')
 							.text(Symphony.Language.get('Unpublished'));
 
-						input.attr('checked', false);
+						input.prop('checked', false);
 					}
 				},
 			});

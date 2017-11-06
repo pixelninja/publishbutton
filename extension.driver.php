@@ -17,7 +17,7 @@ class Extension_PublishButton extends Extension {
 			CREATE TABLE IF NOT EXISTS `tbl_fields_publishbutton` (
 				`id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
 				`field_id` INT(11) UNSIGNED NOT NULL,
-				`default_state` ENUM('on', 'off') NOT NULL DEFAULT 'on',
+				`state` ENUM('on', 'off') NOT NULL DEFAULT 'on',
 				PRIMARY KEY (`id`),
 				KEY `field_id` (`field_id`)
 			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
