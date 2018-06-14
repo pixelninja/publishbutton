@@ -15,7 +15,11 @@
 				field_id = /field-([\d]+)/g.exec(field_wrapper.attr('id'))[1],
 				input = field_wrapper.find('input'),
 				input_state = input.is(':checked'),
-				button = $('#context .actions').append('<li><a class="publishbutton-trigger create button disabled">' + Symphony.Language.get('Unpublished') + '</a></li>').find('.create');
+				button;
+
+			if (!$('#context .actions').length) $('#context #breadcrumbs').after('<ul class="actions" />');
+
+			button = $('#context .actions').append('<li><a class="pu blishbutton-trigger create button disabled">' + Symphony.Language.get('Unpublished') + '</a></li>').find('.create');
 
 			if (input_state) {
 				button
