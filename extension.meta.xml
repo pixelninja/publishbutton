@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <extension id="publishbutton" xmlns="http://symphony-cms.com/schemas/extension/1.0">
 	<name>Publish Button</name>
-	<description>A button that toggles an entry's published state</description>
+	<description>A button that toggles an entry's published-state and allows authors to preview unpublished entries on the live site.</description>
 	<repo type="github">https://github.com/pixelninja/publishbutton</repo>
 	<url type="issues">https://github.com/pixelninja/publishbutton/issues/</url>
 	<types>
