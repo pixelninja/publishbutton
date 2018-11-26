@@ -17,6 +17,8 @@
 				input_state = input.is(':checked'),
 				button;
 
+			if (field_wrapper.hasClass('role-hidden')) return false;
+
 			if (!$('#context .actions').length) $('#context #breadcrumbs').after('<ul class="actions" />');
 
 			button = $('#context .actions').append('<li><a class="publishbutton-trigger create button disabled">' + Symphony.Language.get('Unpublished') + '</a></li>').find('.create');
