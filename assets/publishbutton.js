@@ -32,12 +32,16 @@
 			button.on('click', function (e) {
 				e.preventDefault();
 
+
 				var data = {
 					'xsrf': Symphony.Utilities ? Symphony.Utilities.getXSRF() : '',
 					'entry_id' : entry_id,
-					'field_id' : field_id,
-					'state' : (input_state) ?  'no' : 'yes'
+					'field_id' : field_id
 				};
+
+				input_state = input.is(':checked');
+
+				data.state = (input_state) ?  'no' : 'yes';
 
 				addLoader(button);
 				updateState(data);
